@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import Lottie from "lottie-react";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
+import React from "react";
 
 // Placeholder animation data (replace with your own Lottie JSON)
 const lottieData = {
@@ -30,7 +31,7 @@ const chartData = [
 export default function Home() {
   // For navigation dots (optional, placeholder)
   const sections = ["Hero", "Animation", "Chart", "Summary"];
-  const sectionRefs = sections.map(() => useRef<HTMLDivElement>(null));
+  const sectionRefs = useRef(sections.map(() => React.createRef<HTMLDivElement>()));
 
   return (
     <div className="relative h-screen w-screen overflow-y-scroll snap-y snap-mandatory bg-gradient-to-b from-white to-gray-100 dark:from-black dark:to-gray-900">
@@ -40,7 +41,7 @@ export default function Home() {
           <button
             key={i}
             className="w-3 h-3 rounded-full bg-gray-300 hover:bg-blue-400 border-2 border-white shadow transition-colors"
-            onClick={() => sectionRefs[i].current?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => sectionRefs.current[i].current?.scrollIntoView({ behavior: "smooth" })}
             aria-label={`Go to section ${i + 1}`}
           />
         ))}
@@ -48,7 +49,7 @@ export default function Home() {
 
       {/* Section 1: Hero */}
       <section
-        ref={sectionRefs[0]}
+        ref={sectionRefs.current[0]}
         className="h-screen snap-start flex flex-col items-center justify-center px-4 text-center relative"
       >
         <motion.h1
@@ -79,7 +80,7 @@ export default function Home() {
 
       {/* Section 2: Animated Graphic */}
       <section
-        ref={sectionRefs[1]}
+        ref={sectionRefs.current[1]}
         className="h-screen snap-start flex flex-col items-center justify-center px-4 bg-white dark:bg-gray-900"
       >
         <motion.div
@@ -99,7 +100,7 @@ export default function Home() {
 
       {/* Section 3: Chart */}
       <section
-        ref={sectionRefs[2]}
+        ref={sectionRefs.current[2]}
         className="h-screen snap-start flex flex-col items-center justify-center px-4 bg-gray-50 dark:bg-gray-800"
       >
         <motion.div
@@ -126,7 +127,7 @@ export default function Home() {
 
       {/* Section 4: Call to Action / Summary */}
       <section
-        ref={sectionRefs[3]}
+        ref={sectionRefs.current[3]}
         className="h-screen snap-start flex flex-col items-center justify-center px-4 bg-gradient-to-b from-teal-100 to-blue-200 dark:from-gray-900 dark:to-gray-800"
       >
         <motion.div
